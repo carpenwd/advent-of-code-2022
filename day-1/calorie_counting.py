@@ -1,7 +1,5 @@
 """
 https://adventofcode.com/2022/day/1
-
-
 """
 with open('day-1/calorie_input.txt', 'r', encoding="utf-8") as calorie_file:
     ELF_COUNT = 1
