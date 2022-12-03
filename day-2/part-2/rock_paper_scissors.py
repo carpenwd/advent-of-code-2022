@@ -10,7 +10,7 @@ C and Z == Scissors
 Rock defeats Scissors, Scissors defeats Paper, and Paper defeats Rock.
 If both players choose the same shape, the round instead ends in a draw.
 
-IMPORTANT: The second column says how the round needs to end: 
+IMPORTANT: The second column says how the round needs to end:
     - X means you need to lose
     - Y means you need to end the round in a draw
     - Z means you need to win
