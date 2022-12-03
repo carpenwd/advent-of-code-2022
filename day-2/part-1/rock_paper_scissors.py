@@ -26,7 +26,7 @@ WIN_SCORE = 6
 DRAW_SCORE = 3
 LOSE_SCORE = 0
 
-def calculate_score() -> None:
+def calculate_score() -> int:
     """
     Method for reading in the strategy guide and calculating the final score
     """
@@ -38,7 +38,7 @@ def calculate_score() -> None:
     return total_score
 
 
-def calculate_round(line_input: str) -> None:
+def calculate_round(line_input: str) -> int:
     """
     Method that takes an match input and caluclates the score based off its result.
 
