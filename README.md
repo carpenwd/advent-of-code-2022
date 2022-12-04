@@ -8,3 +8,6 @@
 * Day 3:
   * Part 1: Find the item type that appears in both compartments of each rucksack. What is the sum of the priorities of those item types?
   * Part 2: Find the item type that corresponds to the badges of each three-Elf group. What is the sum of the priorities of those item types?
+* Day 4:
+  * Part 1: In how many assignment pairs does one range fully contain the other?
+  * Part 2: 
