@@ -10,4 +10,4 @@
   * Part 2: Find the item type that corresponds to the badges of each three-Elf group. What is the sum of the priorities of those item types?
 * Day 4:
   * Part 1: In how many assignment pairs does one range fully contain the other?
-  * Part 2: 
+  * Part 2: In how many assignment pairs do the ranges overlap?
