@@ -32,17 +32,19 @@ class CargoStacks:
         """
         Method for taking in a puzzle input line and moving the necessary crates around
         E.x. 'move 2 from 4 to 6' will move 2 entries from 'stack_four' into 'stack_six'
-        using LIFO ordering so `stack_four` would become ['L', 'S', 'R', 'C'] and
-        `stack_six` would become ['C', 'T', 'N', 'W', 'D', 'M', 'S', 'P', 'Z']
+        keeping the same ordering as within the list, so `stack_four` would become
+        ['L', 'S', 'R', 'C'] and `stack_six` would become
+        ['C', 'T', 'N', 'W', 'D', 'M', 'S', 'Z', 'P']
         """
         input_parts = input_line.split(' ')
         crate_amount = int(input_parts[1])
         source = int(input_parts[3])
         destination = int(input_parts[5])
 
-        for _ in range (0, crate_amount):
-            temp_crate = self.stack_dict[source].pop()
-            self.stack_dict[destination].append(temp_crate)
+        temp_crates = self.stack_dict[source][len(self.stack_dict[source]) - crate_amount::]
+        for crate in temp_crates:
+            self.stack_dict[source].pop()  # Still need to remove these values
+            self.stack_dict[destination].append(crate)
 
 
     def get_top_of_stacks(self) -> str:

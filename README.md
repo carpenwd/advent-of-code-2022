@@ -13,3 +13,4 @@
   * Part 2: In how many assignment pairs do the ranges overlap?
 * Day 5:
   * Part 1: After the rearrangement procedure completes, what crate ends up on top of each stack?
+  * Part 2: After the rearrangement procedure completes, what crate ends up on top of each stack?
