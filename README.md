@@ -14,3 +14,6 @@
 * Day 5:
   * Part 1: After the rearrangement procedure completes, what crate ends up on top of each stack?
   * Part 2: After the rearrangement procedure completes, what crate ends up on top of each stack?
+* Day 6:
+  * Part 1: How many characters need to be processed before the first start-of-packet marker is detected?
+  * Part 2: 
