@@ -26,14 +26,45 @@ class Directory():
         assert isinstance(node, Directory)
         self.children.append(node)
 
-    def add_file(self, name, size) -> None:
+    def has_children(self) -> bool:
+        """
+        Method for determing if this directory has any children
+        """
+        if len(self.children) > 0:
+            return True
+        return False
+
+    def add_file(self, name: str, size: int) -> None:
         """
         Method for adding a file to the directory list
         """
         self.files.append({"file_name": name, "file_size": size})
 
-    # TODO Add method for finding directory instance and returning that instance
-    #      This can also be used for checking the existance of a directory
+    def find_directory(self, name: str):
+        """
+        Method that will recursively search through the child directories
+        to find the matching directory instance
+        """
+        for child in self.children:
+            directory = None
+            if child.name == name:
+                directory = child
+            else:
+                if child.has_children():
+                    child.find_directory(name)
+            return directory
+
+    def handle_cmd(self, cmd: str) -> None:
+        """
+        Method that will parse the cli input and either
+        create subdirectories or add files to the current directory
+        """
+        cmd_segments = cmd.split(" ")
+        if cmd_segments[0] == "dir":
+            self.add_child_dir(Directory(name=cmd_segments[1], parent=self.parent))
+        else:
+            self.add_file(cmd_segments[1], cmd_segments[0])
+
 
 def process_commands(file_input: str) -> dict:
     """
@@ -45,27 +76,23 @@ def process_commands(file_input: str) -> dict:
         parent = None
         current_directory = None
         for line in command_input:
+            line = line.strip()
             line_segments = line.split(" ")
             if line.startswith("$ cd"):
                 # Inside a change directory command
-                if parent == "..":
-                    # get_parent_directory(parent)
-                    continue
-
+                if line_segments[2] == "..":
+                    current_directory = dir_listing.find_directory(parent)
+                else:
+                    current_directory = dir_listing.find_directory(line_segments[2])
+                    if current_directory == None:
+                        current_directory = Directory(name=line_segments[2], parent=parent)
+                        dir_listing.add_child_dir(current_directory)
             elif line.startswith("$ ls"):
                 # Start of a list command
                 parent = line_segments[2]
-                continue
             else:
-                #handle_list_cmd()
-                continue
-
-
-        # Notes:
-        # Might help to create my own class for this one that will calculate the total file sizes as they are added
-        # (i.e. make a 'get_dir_size' command that will recursively search through the child to get the total)
-
-    
+                current_directory.handle_cmd(line)
+   
     return dir_listing
 
 if __name__ == "__main__":
