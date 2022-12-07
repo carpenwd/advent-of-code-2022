@@ -17,3 +17,6 @@
 * Day 6:
   * Part 1: How many characters need to be processed before the first start-of-packet marker is detected?
   * Part 2: How many characters need to be processed before the first start-of-message marker is detected?
+* Day 7:
+  * Part 1: Find all of the directories with a total size of at most 100000. What is the sum of the total sizes of those directories?
+  * Part 2: 
