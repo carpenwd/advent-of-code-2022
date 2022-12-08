@@ -63,15 +63,6 @@ class Directory():
             self.add_file(cmd_segments[1], cmd_segments[0])
 
 
-def find_directory(directory_listing, parent, target):
-    """
-    Method for finding a specified directory
-    """
-    # TODO Need to find out a good way to recursively search through here to find the correct target directory
-    # The directory names are NOT unique, so need to match up the target with the correct parent
-    return
-
-
 def process_commands(file_input: str) -> dict:
     """
     Method that will taken in the provided command input and formulate a dictionary
@@ -90,11 +81,13 @@ def process_commands(file_input: str) -> dict:
             if line.startswith("$ cd"):
                 # Inside a change directory command
                 if line_segments[2] == "..":
-                    current_directory = find_directory(
+                    # TODO Instead of attempting to recursively search through this, just keep track of the hierarchy in a list
+                    # Should enable some quick navigation that way
+"""                     current_directory = find_directory(
                         dir_listing,
                         current_directory.parent,
                         current_directory.name
-                    )
+                    ) """
                 else:
                     search_directory = current_directory.find_child_dir(line_segments[2])
                     if search_directory:

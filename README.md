@@ -20,3 +20,5 @@
 * Day 7:
   * Part 1: Find all of the directories with a total size of at most 100000. What is the sum of the total sizes of those directories?
   * Part 2: 
+* Day 8:
+  * Part 1: Consider your map; how many trees are visible from outside the grid?
