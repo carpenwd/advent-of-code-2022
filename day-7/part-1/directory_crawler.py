@@ -40,30 +40,36 @@ class Directory():
         """
         self.files.append({"file_name": name, "file_size": size})
 
-    def find_directory(self, name: str):
+    def find_child_dir(self, name: str):
         """
-        Method that will recursively search through the child directories
-        to find the matching directory instance
+        Method that will attempt to find a directory within this instances children
         """
-        for child in self.children:
-            directory = None
-            if child.name == name:
-                directory = child
-            else:
-                if child.has_children():
-                    child.find_directory(name)
-            return directory
+        search_directory = None
+        if self.has_children():
+            for child in self.children:
+                if child.name == name:
+                    return child
+        return search_directory
 
-    def handle_cmd(self, cmd: str) -> None:
+    def handle_cmd(self, cmd: str, parent: str) -> None:
         """
         Method that will parse the cli input and either
         create subdirectories or add files to the current directory
         """
         cmd_segments = cmd.split(" ")
         if cmd_segments[0] == "dir":
-            self.add_child_dir(Directory(name=cmd_segments[1], parent=self.parent))
+            self.add_child_dir(Directory(name=cmd_segments[1], parent=parent))
         else:
             self.add_file(cmd_segments[1], cmd_segments[0])
+
+
+def find_directory(directory_listing, parent, target):
+    """
+    Method for finding a specified directory
+    """
+    # TODO Need to find out a good way to recursively search through here to find the correct target directory
+    # The directory names are NOT unique, so need to match up the target with the correct parent
+    return
 
 
 def process_commands(file_input: str) -> dict:
@@ -73,27 +79,37 @@ def process_commands(file_input: str) -> dict:
     """
     dir_listing = Directory()
     with open(file_input, 'r', encoding="utf-8") as command_input:
-        parent = None
         current_directory = None
         for line in command_input:
             line = line.strip()
+            if line == "$ cd /":
+                current_directory = dir_listing
+                continue
+
             line_segments = line.split(" ")
             if line.startswith("$ cd"):
                 # Inside a change directory command
                 if line_segments[2] == "..":
-                    current_directory = dir_listing.find_directory(parent)
+                    current_directory = find_directory(
+                        dir_listing,
+                        current_directory.parent,
+                        current_directory.name
+                    )
                 else:
-                    current_directory = dir_listing.find_directory(line_segments[2])
-                    if current_directory == None:
-                        current_directory = Directory(name=line_segments[2], parent=parent)
-                        dir_listing.add_child_dir(current_directory)
+                    search_directory = current_directory.find_child_dir(line_segments[2])
+                    if search_directory:
+                        current_directory = search_directory
+                    else:
+                        new_dir = Directory(name=line_segments[2], parent=current_directory.name)
+                        current_directory.add_child_dir(new_dir)
+                        current_directory = new_dir
             elif line.startswith("$ ls"):
-                # Start of a list command
-                parent = line_segments[2]
+                # Start of a list command, nothing really to do
+                continue
             else:
-                current_directory.handle_cmd(line)
-   
+                current_directory.handle_cmd(line, current_directory.name)
+
     return dir_listing
 
 if __name__ == "__main__":
-    print(f"Directory contents {process_commands('day-7/example_commands.txt')}")
+    print(f"Directory contents {process_commands('day-7/commands.txt')}")
